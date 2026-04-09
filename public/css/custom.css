@@ -1,0 +1,57 @@
+tr.receipt-details-row td{
+    padding-top: 0px;
+    /* border-bottom-color: black; */
+}
+
+tr.receipt-summary-row td{
+    color:black;
+}
+
+.receipt-container{
+    color:black;
+}
+
+.receipt-meta{
+    color: black;
+}
+
+/* Hide browser UI elements when PWA is installed (standalone mode) */
+@media (display-mode: standalone), (display-mode: fullscreen) {
+    /* Ensure full screen usage */
+    html, body {
+        margin: 0;
+        padding: 0;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Hide address bar space on mobile */
+    html {
+        height: 100%;
+        height: -webkit-fill-available;
+    }
+    
+    body {
+        min-height: 100%;
+        min-height: -webkit-fill-available;
+        -webkit-app-region: no-drag;
+    }
+    
+    /* Prevent browser UI elements from showing */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* Additional styles for native-like appearance when PWA is installed */
+.pwa-standalone,
+.pwa-installed {
+    /* Native app appearance */
+    -webkit-app-region: no-drag;
+}
+
+.pwa-standalone body,
+.pwa-installed body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+}

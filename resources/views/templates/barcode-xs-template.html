@@ -1,0 +1,125 @@
+<style>
+    /* Compact Barcode Label Styles (XS Template) */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .barcode-container {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: #ffffff;
+    }
+
+    .store-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+        font-size: <%= settings.storeFontSize || '0.75em' %>;
+    }
+
+    .product-price {
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 4px 0;
+        letter-spacing: 0.3px;
+        font-size: <%= settings.priceFontSize || '0.9em' %>;
+    }
+
+    .barcode {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 6px 0;
+        min-height: 40px;
+    }
+
+    .barcode svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .product-name {
+        font-weight: 600;
+        color: #1a1a1a;
+        word-wrap: break-word;
+        line-height: 1.3;
+        margin: 4px 0;
+        font-size: <%= settings.productNameFontSize || '0.8em' %>;
+    }
+
+    /* Print Optimizations */
+    @media print {
+        @page {
+            size: auto;
+            margin: 3mm;
+        }
+
+        .barcode-container {
+            page-break-inside: avoid;
+            padding: 3mm;
+        }
+
+        .barcode svg {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+
+    /* High DPI Display Support */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .barcode svg {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+    }
+</style>
+
+<div class="barcode-container">
+    <% if (barcode_settings.show_barcode_store === "on" && shop_name) { %>
+    <p class="store-name" style="font-size: <%= settings.storeFontSize || '0.75em' %>;">
+        <%= shop_name %>
+    </p>
+    <% } %>
+    <% if (barcode_settings.show_barcode_product_price === "on") { %>
+    <p 
+        class="product-price"
+        style="
+            font-size: <%= settings.priceFontSize || '0.9em' %>; 
+            margin-top: <%= settings.priceMarginTop || '2px' %>; 
+            margin-bottom: <%= settings.priceMarginBottom || '2px' %>;
+        "
+    >
+        RS. <%= typeof product.price === 'number' ? product.price.toFixed(2) : product.price || '0.00' %>
+    </p>
+    <% } %>
+    <div 
+        class="barcode" 
+        style="margin-top: <%= settings.barcodeMarginTop || '0' %>;"
+    >
+        <svg 
+            id="barcode"
+            role="img"
+            aria-label="Product Barcode: <%= product.barcode %>"
+        ></svg>
+    </div>
+    <% if (barcode_settings.show_barcode_product_name === "on") { %>
+    <p 
+        class="product-name" 
+        style="
+            margin-top: <%= settings.productNameMarginTop || '2px' %>; 
+            font-size: <%= settings.productNameFontSize || '0.8em' %>;
+        "
+    >
+        <%= product.name || 'N/A' %>
+    </p>
+    <% } %>
+</div>
+

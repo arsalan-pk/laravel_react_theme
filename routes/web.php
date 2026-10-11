@@ -4,7 +4,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BackupStorageMediaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\PosNoteController;
+use App\Http\Controllers\TodoListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestoreController;
 use App\Http\Controllers\SettingController;
@@ -90,19 +90,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/backup-storage-media/{id}', [BackupStorageMediaController::class, 'update'])->name('backup-storage-media.update')->middleware('can:manage_backups');
     Route::delete('/backup-storage-media/{id}', [BackupStorageMediaController::class, 'destroy'])->name('backup-storage-media.destroy')->middleware('can:manage_backups');
 
-    // POS Notes routes
-    Route::get('/api/pos-notes/days', [PosNoteController::class, 'getDays'])->name('pos-notes.days');
-    Route::get('/api/pos-notes/by-day', [PosNoteController::class, 'getNotesByDay'])->name('pos-notes.by-day');
-    Route::post('/api/pos-notes', [PosNoteController::class, 'store'])->name('pos-notes.store');
-    Route::put('/api/pos-notes/{id}', [PosNoteController::class, 'update'])->name('pos-notes.update');
-    Route::patch('/api/pos-notes/{id}/toggle-complete', [PosNoteController::class, 'toggleComplete'])->name('pos-notes.toggle-complete');
-    Route::delete('/api/pos-notes/{id}', [PosNoteController::class, 'destroy'])->name('pos-notes.destroy');
+    // Todo List routes
+    Route::get('/api/todolist/days', [TodoListController::class, 'getDays'])->name('todolist.days');
+    Route::get('/api/todolist/by-day', [TodoListController::class, 'getNotesByDay'])->name('todolist.by-day');
+    Route::post('/api/todolist', [TodoListController::class, 'store'])->name('todolist.store');
+    Route::put('/api/todolist/{id}', [TodoListController::class, 'update'])->name('todolist.update');
+    Route::patch('/api/todolist/{id}/toggle-complete', [TodoListController::class, 'toggleComplete'])->name('todolist.toggle-complete');
+    Route::delete('/api/todolist/{id}', [TodoListController::class, 'destroy'])->name('todolist.destroy');
 
     // Soft delete routes
-    Route::get('/api/pos-notes/trashed', [PosNoteController::class, 'getTrashedNotes'])->name('pos-notes.trashed');
-    Route::post('/api/pos-notes/{id}/restore', [PosNoteController::class, 'restore'])->name('pos-notes.restore');
-    Route::delete('/api/pos-notes/{id}/force', [PosNoteController::class, 'forceDelete'])->name('pos-notes.force-delete');
+    Route::get('/api/todolist/trashed', [TodoListController::class, 'getTrashedNotes'])->name('todolist.trashed');
+    Route::post('/api/todolist/{id}/restore', [TodoListController::class, 'restore'])->name('todolist.restore');
+    Route::delete('/api/todolist/{id}/force', [TodoListController::class, 'forceDelete'])->name('todolist.force-delete');
 
     });
+
+// Standalone restore - accessible without authentication
+Route::get('/restore-standalone', [RestoreController::class, 'showStandalone'])->name('restore.standalone');
+Route::post('/restore-standalone', [RestoreController::class, 'restoreStandalone'])->name('restore.standalone.submit');
 
 require __DIR__.'/auth.php';

@@ -203,6 +203,7 @@ export default function Edit({ mustVerifyEmail, status }) {
                         spacing={3}
                         alignItems={{ xs: "flex-start", md: "center" }}
                         justifyContent="space-between"
+                        sx={{ width: '100%' }}
                     >
                         <Stack direction="row" spacing={2} alignItems="center">
                             <Box sx={{ position: 'relative' }}>
@@ -275,13 +276,6 @@ export default function Edit({ mustVerifyEmail, status }) {
                                 </Stack>
                             </Box>
                         </Stack>
-                        <Button
-                            variant="outlined"
-                            color="inherit"
-                            onClick={() => router.visit("/dashboard")}
-                        >
-                            Back to Dashboard
-                        </Button>
                     </Stack>
                 </Paper>
 
@@ -332,8 +326,8 @@ export default function Edit({ mustVerifyEmail, status }) {
                     ))}
                 </Box>
 
-                <Grid container spacing={3} alignItems="stretch">
-                    <Grid item xs={12} md={6}>
+                <Grid container spacing={3} sx={{ alignItems: 'stretch' }}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Card
                             elevation={0}
                             sx={{
@@ -383,7 +377,7 @@ export default function Edit({ mustVerifyEmail, status }) {
                         </Card>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Card
                             elevation={0}
                             sx={{

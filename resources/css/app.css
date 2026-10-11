@@ -31,6 +31,12 @@ select:focus {
   padding: 15px;
 }
 
+/* Remove padding from all MuiToolbar components */
+.MuiToolbar-root {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
 #nprogress .bar {
   z-index: 2000 !important;
   height: 5px !important;

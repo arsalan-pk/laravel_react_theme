@@ -101,7 +101,7 @@ export function OverViewCards() {
                             >
                                 {metric.icon}
                             </Box>
-                            <Box minWidth={0}>
+                            <Box sx={{ minWidth: 0 }}>
                                 <Typography
                                     variant="subtitle2"
                                     color="text.secondary"

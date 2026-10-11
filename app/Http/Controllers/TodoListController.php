@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PosNote;
+use App\Models\TodoList;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PosNoteController extends Controller
+class TodoListController extends Controller
 {
     public function getDays()
     {
         $user = Auth::user();
 
-        $days = PosNote::where('user_id', $user->id)
+        $days = TodoList::where('user_id', $user->id)
             ->selectRaw('
                 DATE(note_date) as note_date, 
                 COUNT(*) as note_count, 
@@ -49,7 +49,7 @@ class PosNoteController extends Controller
         // Frontend now sends only date (YYYY-MM-DD), no timestamp
         $dateOnly = $date;
 
-        $notes = PosNote::where('user_id', $user->id)
+        $notes = TodoList::where('user_id', $user->id)
             ->where('note_date', $dateOnly)
             ->orderBy('created_at', 'asc')
             ->get()
@@ -104,7 +104,7 @@ class PosNoteController extends Controller
             $audioPath = $request->file('audio_file')->store('voice_notes', 'public');
         }
 
-        $note = PosNote::create([
+        $note = TodoList::create([
             'note_text' => $request->note_text,
             'audio_path' => $audioPath,
             'note_date' => Carbon::today()->format('Y-m-d'),
@@ -133,7 +133,7 @@ class PosNoteController extends Controller
             ]);
 
             $user = Auth::user();
-            $note = PosNote::where('id', $id)
+            $note = TodoList::where('id', $id)
                 ->where('user_id', $user->id)
                 ->first();
 
@@ -182,7 +182,7 @@ class PosNoteController extends Controller
         try {
             $user = Auth::user();
 
-            $note = PosNote::where('user_id', $user->id)->findOrFail($id);
+            $note = TodoList::where('user_id', $user->id)->findOrFail($id);
             $note->delete(); // This will be a soft delete now
 
             return response()->json([
@@ -202,7 +202,7 @@ class PosNoteController extends Controller
         try {
             $user = Auth::user();
 
-            $note = PosNote::withTrashed()
+            $note = TodoList::withTrashed()
                 ->where('user_id', $user->id)
                 ->findOrFail($id);
 
@@ -226,7 +226,7 @@ class PosNoteController extends Controller
         try {
             $user = Auth::user();
 
-            $trashedNotes = PosNote::onlyTrashed()
+            $trashedNotes = TodoList::onlyTrashed()
                 ->where('user_id', $user->id)
                 ->orderBy('deleted_at', 'desc')
                 ->get()
@@ -259,7 +259,7 @@ class PosNoteController extends Controller
         try {
             $user = Auth::user();
 
-            $note = PosNote::withTrashed()
+            $note = TodoList::withTrashed()
                 ->where('user_id', $user->id)
                 ->findOrFail($id);
 
@@ -287,7 +287,7 @@ class PosNoteController extends Controller
         try {
             $user = Auth::user();
 
-            $note = PosNote::where('user_id', $user->id)->findOrFail($id);
+            $note = TodoList::where('user_id', $user->id)->findOrFail($id);
 
             $note->is_completed = ! $note->is_completed;
             $note->completed_at = $note->is_completed ? now() : null;

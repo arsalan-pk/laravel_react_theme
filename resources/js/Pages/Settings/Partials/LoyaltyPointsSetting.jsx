@@ -87,8 +87,8 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
 
                             <Grid
                                 size={12}
-                                justifyContent={"end"}
-                                sx={{ display: "flex", mt: 1 }}
+                               
+                                sx={{ display: "flex", mt: 1 , justifyContent: "end" }}
                                 spacing={1}
                                 container
                             >

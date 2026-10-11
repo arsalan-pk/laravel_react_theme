@@ -29,7 +29,7 @@ return [
             'enabled' => env('NEW_DEVICE_NOTIFICATION', true),
 
             // Use torann/geoip to attempt to get a location
-            'location' => false,
+            'location' => true,
 
             // The Notification class to send
             'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
@@ -39,7 +39,7 @@ return [
             'enabled' => env('FAILED_LOGIN_NOTIFICATION', false),
 
             // Use torann/geoip to attempt to get a location
-            'location' => false,
+            'location' => true,
 
             // The Notification class to send
             'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin::class,
@@ -48,7 +48,7 @@ return [
 
     // When the clean-up command is run, delete old logs greater than `purge` days
     // Don't schedule the clean-up command if you want to keep logs forever.
-    'purge' => 200,
+    'purge' => 365,
 
     // If you are behind an CDN proxy, set 'behind_cdn.http_header_field' to the corresponding http header field of your cdn
     // For cloudflare you can have look at: https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/

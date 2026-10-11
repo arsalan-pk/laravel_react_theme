@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PosNote extends Model
+class TodoList extends Model
 {
     use SoftDeletes;
+
+    protected $table = 'todolist';
 
     protected $fillable = [
         'note_text',

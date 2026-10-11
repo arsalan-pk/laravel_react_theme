@@ -37,20 +37,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // OPTIMIZED: Only sync roles if user doesn't already have the role assigned
-        // This avoids unnecessary database operations on every login
         $user = Auth::user();
         if ($user && $user->user_role) {
             try {
-                // Check if user already has the role to avoid unnecessary sync
                 if (!$user->hasRole($user->user_role)) {
                     $user->syncRoles([$user->user_role]);
-                    // Only clear cache if we actually changed roles
                     app()[PermissionRegistrar::class]->forgetCachedPermissions();
                 }
             } catch (\Exception $e) {
-                // Log error but don't block login
-                \Illuminate\Support\Facades\Log::warning('Failed to sync user role on login: '.$e->getMessage());
+                \Illuminate\Support\Facades\Log::warning('Failed to sync user role on login: ' . $e->getMessage());
             }
         }
 
@@ -68,6 +63,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

@@ -15,11 +15,11 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
-    esbuild: {
-        jsx: 'automatic',
+    oxc: {
+        jsx: { runtime: 'automatic' },
     },
-      build: {
-        rollupOptions: {
+    build: {
+        rolldownOptions: {
             external: [
                 'laravel-vite-plugin',
             ],

@@ -85,7 +85,7 @@ export default function PermissionsModal({ open, onClose, role, permissionGroups
 
         <Grid container spacing={2}>
           {Object.keys(groupedPermissions).map((group) => (
-            <Grid item xs={12} sm={6} md={4} key={group}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={group}>
               <Box
                 sx={{
                   p: 2,

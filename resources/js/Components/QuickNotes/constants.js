@@ -1,7 +1,6 @@
 // Quick Todo List Constants
 export const SPEECH_RECOGNITION_CONFIG = {
-    PRIMARY_LANGUAGE: 'ps-AF', // Pashto (Afghanistan)
-    FALLBACK_LANGUAGES: ['ur-PK', 'ur-IN', 'en-US'],
+    LANGUAGE: 'en-US', // English (United States)
     CONTINUOUS: true,
     INTERIM_RESULTS: true,
 };
@@ -25,15 +24,15 @@ export const UI_CONFIG = {
 };
 
 export const API_ENDPOINTS = {
-    DAYS: '/api/pos-notes/days',
-    BY_DAY: '/api/pos-notes/by-day',
-    STORE: '/api/pos-notes',
-    UPDATE: (id) => `/api/pos-notes/${id}`,
-    DELETE: (id) => `/api/pos-notes/${id}`,
-    TRASHED: '/api/pos-notes/trashed',
-    RESTORE: (id) => `/api/pos-notes/${id}/restore`,
-    FORCE_DELETE: (id) => `/api/pos-notes/${id}/force`,
-    TOGGLE_COMPLETE: (id) => `/api/pos-notes/${id}/toggle-complete`,
+    DAYS: '/api/todolist/days',
+    BY_DAY: '/api/todolist/by-day',
+    STORE: '/api/todolist',
+    UPDATE: (id) => `/api/todolist/${id}`,
+    DELETE: (id) => `/api/todolist/${id}`,
+    TRASHED: '/api/todolist/trashed',
+    RESTORE: (id) => `/api/todolist/${id}/restore`,
+    FORCE_DELETE: (id) => `/api/todolist/${id}/force`,
+    TOGGLE_COMPLETE: (id) => `/api/todolist/${id}/toggle-complete`,
 };
 
 export const MESSAGES = {
@@ -55,7 +54,7 @@ export const MESSAGES = {
     },
     RECORDING: {
         AUDIO: '🎤 Recording Audio... Click Stop when done',
-        TRANSCRIBING: '🗣️ Converting Pashto speech to Urdu text...',
+        TRANSCRIBING: '🗣️ Converting speech to text...',
         READY: '🎵 Voice note ready - Play to preview or Send',
     },
 };

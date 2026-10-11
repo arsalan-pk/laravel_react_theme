@@ -31,7 +31,7 @@ export default function Update() {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: '.zip', // Only accept zip files
+        accept: { 'application/zip': ['.zip'] }, // Only accept zip files
         multiple: false, // Only one file allowed
     });
 
@@ -81,7 +81,7 @@ export default function Update() {
             }
         >
             <Head title="Update" />
-            <Grid justifyContent={'center'} alignItems={'center'} container flexDirection={'column'}>
+            <Grid container flexDirection={'column'} sx={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Grid spacing={2} size={6}>
                   {/* Dropzone area */}
                 <div

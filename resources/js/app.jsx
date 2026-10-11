@@ -2,37 +2,43 @@ import './bootstrap';
 import '../css/app.css';
 
 import { createRoot } from 'react-dom/client';
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { PurchaseProvider } from './Context/PurchaseContext';
 import { SharedProvider } from './Context/SharedContext';
 import { useCurrencyStore } from './stores/currencyStore';
 import { ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import theme from './theme-6';
 
+const muiCache = createCache({ key: 'mui', prepend: true });
+
+// Suppress known MUI dev-only warnings that are not actionable
+if (import.meta.env.DEV) {
+    const originalError = console.error.bind(console);
+    console.error = (...args) => {
+        const msg = typeof args[0] === 'string' ? args[0] : '';
+        if (msg.includes(':first-child') || msg.includes('pseudo class')) return;
+        originalError(...args);
+    };
+}
 
 const appName = import.meta.env.VITE_APP_NAME || 'ARSASOFT';
-const isDevelopment = import.meta.env.DEV; // Check if development mode
-
-import { InertiaProgress } from '@inertiajs/progress';
-
-
-InertiaProgress.init({
-    color: theme.palette.primary.dark,
-    includeCSS: true,
-    showSpinner: false,
-})
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+    progress: {
+        color: theme.palette.primary.dark,
+        showSpinner: false,
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
 
         // Initialize currency store from Inertia props
         let currencySettingsFromServer = props.initialPage?.props?.settings?.currency_settings || {};
 
-        // Parse if it's a JSON string
         if (typeof currencySettingsFromServer === 'string') {
             try {
                 currencySettingsFromServer = JSON.parse(currencySettingsFromServer);
@@ -56,10 +62,19 @@ createInertiaApp({
             },
         });
 
+        // Auto-reload on CSRF token mismatch (419) — happens after logout
+        // This gives the browser a fresh token instead of showing "Page Expired"
+        router.on('invalid', (e) => {
+            if (e.detail?.response?.status === 419) {
+                e.preventDefault();
+                window.location.reload();
+            }
+        });
 
         root.render(
+            <CacheProvider value={muiCache}>
             <ThemeProvider theme={theme}>
-                <CssBaseline /> {/* Ensures global background + text styles */}
+                <CssBaseline />
                 <GlobalStyles
                     styles={(theme) => ({
                         '*::-webkit-scrollbar': {
@@ -82,14 +97,13 @@ createInertiaApp({
                         },
                     })}
                 />
-              
                 <PurchaseProvider>
                     <SharedProvider>
                         <App {...props} />
                     </SharedProvider>
                 </PurchaseProvider>
             </ThemeProvider>
+            </CacheProvider>
         );
     },
-  
 });

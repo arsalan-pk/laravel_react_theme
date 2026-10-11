@@ -84,7 +84,7 @@ export default function RestoreIndex({ deletedCounts, pageLabel }) {
                 <Grid container spacing={3}>
                     {restoreCards.map((card) => (
                         permissions.includes(card.permission) && (
-                            <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={card.title}>
+                            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={card.title}>
                                 <Card
                                     sx={{
                                         height: '100%',

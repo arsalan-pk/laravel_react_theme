@@ -61,8 +61,17 @@ class LoginRequest extends FormRequest
 
         // SECURITY: Check all conditions together to prevent user enumeration
         if ($user && $passwordValid && $user->is_active) {
-            // Successful authentication
-            Auth::login($user, $this->boolean('remember'));
+            // Successful authentication - wrap in try/catch so post-login listeners
+            // (e.g. authentication-log package) don't block the login on cache errors
+            try {
+                Auth::login($user, $this->boolean('remember'));
+            } catch (\BadMethodCallException $e) {
+                // Cache tagging not supported (e.g. database driver) — login still succeeded,
+                // just log the warning and continue
+                \Illuminate\Support\Facades\Log::warning('Post-login listener error (non-critical): ' . $e->getMessage());
+                // Manually set the authenticated user since Auth::login() may have partially failed
+                Auth::setUser($user);
+            }
             RateLimiter::clear($this->throttleKey());
             return;
         }

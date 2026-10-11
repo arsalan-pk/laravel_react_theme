@@ -139,7 +139,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
 
     const loadDays = async () => {
         try {
-            const response = await axios.get('/api/pos-notes/days');
+            const response = await axios.get('/api/todolist/days');
             setDays(response.data);
         } catch (error) {
             console.error('Error loading days:', error);
@@ -152,7 +152,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
             setLoading(true);
         }
         try {
-            const response = await axios.get('/api/pos-notes/by-day', {
+            const response = await axios.get('/api/todolist/by-day', {
                 params: { date }
             });
             const loadedNotes = response.data;
@@ -238,7 +238,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
                     formData.append('audio_file', audioFile);
                 }
 
-                const response = await axios.post(`/api/pos-notes/${editingNote.id}`, formData, {
+                const response = await axios.post(`/api/todolist/${editingNote.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'X-HTTP-Method-Override': 'PUT'
@@ -257,7 +257,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
                 deleteRecording();
             } else {
                 // Create new note
-                const response = await axios.post('/api/pos-notes', {
+                const response = await axios.post('/api/todolist', {
                     note_text: noteText.trim()
                 });
 
@@ -385,11 +385,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
         // Configure speech recognition
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.lang = 'ps-AF'; // Pashto (Afghanistan) - primary
-
-        // Fallback languages if Pashto is not available
-        const fallbackLanguages = ['ur-PK', 'ur-IN', 'en-US'];
-        let currentLangIndex = 0;
+        recognition.lang = 'en-US'; // English (United States)
 
         recognition.onstart = () => {
             setIsTranscribing(true);
@@ -420,15 +416,6 @@ const QuickNotesPanel = ({ open, onClose }) => {
 
         recognition.onerror = (event) => {
             console.error('Speech recognition error:', event.error);
-
-            // Try fallback language if current one fails
-            if (event.error === 'language-not-supported' && currentLangIndex < fallbackLanguages.length) {
-                recognition.lang = fallbackLanguages[currentLangIndex];
-                currentLangIndex++;
-                recognition.start();
-                return;
-            }
-
             setIsTranscribing(false);
             if (event.error !== 'aborted') {
                 setError('Speech recognition failed. Voice will still be recorded.');
@@ -545,7 +532,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
             formData.append('audio_file', audioFile);
 
             // Send to server
-            const uploadResponse = await axios.post('/api/pos-notes', formData, {
+            const uploadResponse = await axios.post('/api/todolist', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -637,7 +624,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
 
         setDeletingNote(true);
         try {
-            const response = await axios.delete(`/api/pos-notes/${deleteConfirmNote.id}`);
+            const response = await axios.delete(`/api/todolist/${deleteConfirmNote.id}`);
 
             if (response.data.success) {
                 // Remove note from UI
@@ -712,7 +699,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
     const loadTrashedNotes = async () => {
         setLoadingTrash(true);
         try {
-            const response = await axios.get('/api/pos-notes/trashed');
+            const response = await axios.get('/api/todolist/trashed');
             if (response.data.success) {
                 setTrashedNotes(response.data.notes);
             }
@@ -737,7 +724,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
 
         setRestoringNote(true);
         try {
-            const response = await axios.post(`/api/pos-notes/${restoreConfirmNote.id}/restore`);
+            const response = await axios.post(`/api/todolist/${restoreConfirmNote.id}/restore`);
             if (response.data.success) {
                 // Remove from trash
                 setTrashedNotes(prev => prev.filter(note => note.id !== restoreConfirmNote.id));
@@ -764,7 +751,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
 
         setPermanentDeletingNote(true);
         try {
-            const response = await axios.delete(`/api/pos-notes/${permanentDeleteConfirmNote.id}/force`);
+            const response = await axios.delete(`/api/todolist/${permanentDeleteConfirmNote.id}/force`);
             if (response.data.success) {
                 // Remove from trash permanently
                 setTrashedNotes(prev => prev.filter(note => note.id !== permanentDeleteConfirmNote.id));
@@ -802,7 +789,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
     const toggleComplete = async (noteId) => {
         try {
             // Send API request first to get accurate data
-            const response = await axios.patch(`/api/pos-notes/${noteId}/toggle-complete`);
+            const response = await axios.patch(`/api/todolist/${noteId}/toggle-complete`);
             if (response.data.success) {
                 // Update the note in the current notes list
                 setNotes(prev => prev.map(note =>
@@ -1288,7 +1275,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
                                         borderColor: 'primary.main',
                                         position: 'relative'
                                     }}
-                                    title="Start Recording with Pashto to Urdu Speech Recognition"
+                                    title="Start Recording with Speech Recognition"
                                 >
                                     <MicIcon />
                                     <RecordVoiceOverIcon
@@ -1410,7 +1397,7 @@ const QuickNotesPanel = ({ open, onClose }) => {
                                 />
                                 {isTranscribing && (
                                     <Chip
-                                        label="🗣️ Converting Pashto speech to Urdu text..."
+                                        label="🗣️ Converting speech to text..."
                                         color="info"
                                         size="small"
                                         sx={{
@@ -1418,18 +1405,6 @@ const QuickNotesPanel = ({ open, onClose }) => {
                                             animation: 'pulse 1.5s infinite'
                                         }}
                                     />
-                                )}
-                                {transcribedText && (
-                                    <Box sx={{
-                                        p: 1,
-                                        backgroundColor: '#e3f2fd',
-                                        borderRadius: 1,
-                                        border: '1px solid #2196f3'
-                                    }}>
-                                        <Typography variant="caption" sx={{ color: '#1976d2', fontWeight: 500 }}>
-                                            Transcribed: {transcribedText}
-                                        </Typography>
-                                    </Box>
                                 )}
                             </Box>
                         )}

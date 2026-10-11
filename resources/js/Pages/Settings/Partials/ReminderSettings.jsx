@@ -389,8 +389,8 @@ const ReminderSettings = ({ handleSubmit, settingFormData, handleChange, setSett
 
                             <Grid
                                 size={12}
-                                justifyContent={"end"}
-                                sx={{ display: "flex", mt: 2 }}
+                               
+                                sx={{ display: "flex", mt: 2 , justifyContent: "end" }}
                                 spacing={1}
                                 container
                             >

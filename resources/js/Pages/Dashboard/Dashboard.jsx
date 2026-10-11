@@ -135,13 +135,6 @@ export default function Dashboard({ version }) {
                             </Typography>
                           
                         </Box>
-                        <Stack direction="row" spacing={1}>
-                            <Chip label={`Version ${version}`} variant="outlined" />
-                            <Chip
-                                label={dayjs().format("MMM DD, YYYY")}
-                                variant="outlined"
-                            />
-                        </Stack>
                     </Stack>
                 </Paper>
 
@@ -151,7 +144,7 @@ export default function Dashboard({ version }) {
                         spacing={{ xs: 1, md: 1.5 }}
                         sx={{ mb: { xs: 1.5, md: 2 } }}
                     >
-                                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                                 <Alert
                                     severity="info"
                                     sx={{
@@ -163,7 +156,7 @@ export default function Dashboard({ version }) {
                                     <strong>3</strong> Pending 
                                 </Alert>
                             </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                                 <Alert
                                     severity="error"
                                     sx={{
@@ -183,11 +176,10 @@ export default function Dashboard({ version }) {
                 <Grid
                     container
                     spacing={2.5}
-                    sx={{ py: { xs: 2, md: 4 } }}
-                    alignItems="stretch"
+                    sx={{ py: { xs: 2, md: 4 }, alignItems: "stretch" }}
                 >
                     {userPermissions.includes('view_dashboard_analytics') && (
-                        <Grid item size={{ xs: 12, md: 4 }}>
+                        <Grid size={{ xs: 12, md: 4 }}>
                             <Paper
                                 elevation={0}
                                 sx={{
@@ -276,7 +268,7 @@ export default function Dashboard({ version }) {
                         </Grid>
                     )}
                     {userPermissions.includes('view_dashboard_analytics') && (
-                        <Grid item size={{ xs: 12, md: 8 }}>
+                        <Grid size={{ xs: 12, md: 8 }}>
                             <Paper
                                 elevation={0}
                                 sx={{

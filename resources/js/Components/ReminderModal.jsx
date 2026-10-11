@@ -253,7 +253,7 @@ Thank you!`;
             <DialogContent>
                 <Grid container spacing={3}>
                     {/* Customer Information */}
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                         <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                             Customer Information
                         </Typography>
@@ -265,7 +265,7 @@ Thank you!`;
                             }}
                         >
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Customer Name
                                     </Typography>
@@ -273,7 +273,7 @@ Thank you!`;
                                         {sale.name || "Walk-in Customer"}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Invoice Number
                                     </Typography>
@@ -281,7 +281,7 @@ Thank you!`;
                                         #{sale.invoice_number}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Phone / WhatsApp
                                     </Typography>
@@ -289,7 +289,7 @@ Thank you!`;
                                         {sale.whatsapp || sale.phone || "N/A"}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Email
                                     </Typography>
@@ -297,7 +297,7 @@ Thank you!`;
                                         {sale.email || "N/A"}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Amount Pending
                                     </Typography>
@@ -308,7 +308,7 @@ Thank you!`;
                                         {formatCurrency(amountPending, false)}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid size={{ xs: 12, sm: 6 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Due Date
                                     </Typography>
@@ -320,12 +320,12 @@ Thank you!`;
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                         <Divider />
                     </Grid>
 
                     {/* Sending Method */}
-                    <Grid item xs={12} size={12}>
+                    <Grid size={12}>
                         <FormControl component="fieldset" fullWidth>
                             <FormLabel component="legend" sx={{ mb: 2, fontWeight: 600 }}>
                                 Sending Method
@@ -353,12 +353,12 @@ Thank you!`;
                         </FormControl>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                         <Divider />
                     </Grid>
 
                     {/* Message */}
-                    <Grid item size={12}>
+                    <Grid size={12}>
                         <TextField
                             fullWidth
                             multiline

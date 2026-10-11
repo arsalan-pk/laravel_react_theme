@@ -232,7 +232,7 @@ export default function CreateRole({ permission_groups, role }) {
                     <CardContent>
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                <Grid item xs={12} md={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <TextField
                                         fullWidth
                                         required
@@ -251,8 +251,8 @@ export default function CreateRole({ permission_groups, role }) {
                             </Grid>
 
                             <Box sx={{ mt: 4, mb: 2 }}>
-                                <Grid container spacing={2} alignItems="center">
-                                    <Grid item xs={12} md={9}>
+                                <Grid container spacing={2} sx={{ alignItems: 'center' }}>
+                                    <Grid size={{ xs: 12, md: 9 }}>
                                         <Typography variant="h6" fontWeight="bold" textTransform="capitalize">
                                             Assign Permissions
                                         </Typography>
@@ -262,7 +262,7 @@ export default function CreateRole({ permission_groups, role }) {
                                             </Alert>
                                         )}
                                     </Grid>
-                                    <Grid item xs={12} md={3}>
+                                    <Grid size={{ xs: 12, md: 3 }}>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -290,7 +290,7 @@ export default function CreateRole({ permission_groups, role }) {
                                         : groupState.allSelected;
 
                                     return (
-                                        <Grid item xs={12} sm={6} md={3} key={group}>
+                                        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={group}>
                                             <Box sx={{ mb: 2 }}>
                                                 <Typography
                                                     variant="subtitle1"

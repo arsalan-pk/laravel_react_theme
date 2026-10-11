@@ -74,28 +74,28 @@ export default function Summaries() {
                     
                     {/* Static Performance Metrics */}
                     <Grid container spacing={2} sx={{ mb: 3 }}>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                             <Paper sx={{ p: 2, textAlign: 'center' }}>
                                 <Typography variant="h6" color="primary.main">85%</Typography>
                                 <Typography variant="caption">Sales Growth</Typography>
                                 <LinearProgress variant="determinate" value={85} sx={{ mt: 1 }} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                             <Paper sx={{ p: 2, textAlign: 'center' }}>
                                 <Typography variant="h6" color="success.main">92%</Typography>
                                 <Typography variant="caption">Target Achievement</Typography>
                                 <LinearProgress variant="determinate" value={92} color="success" sx={{ mt: 1 }} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                             <Paper sx={{ p: 2, textAlign: 'center' }}>
                                 <Typography variant="h6" color="warning.main">78%</Typography>
                                 <Typography variant="caption">Inventory Turnover</Typography>
                                 <LinearProgress variant="determinate" value={78} color="warning" sx={{ mt: 1 }} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                             <Paper sx={{ p: 2, textAlign: 'center' }}>
                                 <Typography variant="h6" color="info.main">95%</Typography>
                                 <Typography variant="caption">Customer Satisfaction</Typography>

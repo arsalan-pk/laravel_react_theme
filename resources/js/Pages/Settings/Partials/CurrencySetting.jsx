@@ -170,8 +170,8 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
 
                     <Grid
                         size={12}
-                        justifyContent={"end"}
-                        sx={{ display: "flex" }}
+                       
+                        sx={{ display: "flex" , justifyContent: "end" }}
                     >
                         <Button
                             type="submit"

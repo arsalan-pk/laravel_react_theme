@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
         <meta name="theme-color" content="#667eea">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="{{ asset(\App\Models\Setting::where('meta_key', 'favicon')->value('meta_value') ?? 'AppImages/android/android-launchericon-192-192.png') }}">

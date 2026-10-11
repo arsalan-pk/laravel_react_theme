@@ -196,8 +196,8 @@ export default function User({ users, roles }) {
 
       <Card elevation={2}>
         <CardContent>
-          <Grid container spacing={2} alignItems='center' sx={{ mb: 3 }}>
-            <Grid size={12} container justifyContent='space-between' alignItems='center'>
+          <Grid container spacing={2} sx={{ alignItems: 'center', mb: 3 }}>
+            <Grid size={12} container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <BadgeIcon sx={{ fontSize: 28, color: 'primary.main' }} />

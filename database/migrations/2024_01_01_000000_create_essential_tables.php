@@ -62,19 +62,24 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // POS Notes
-        Schema::create('pos_notes', function (Blueprint $table) {
+        // Todo List
+        Schema::create('todolist', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('note_text')->nullable();
+            $table->string('audio_path')->nullable();
             $table->date('note_date');
             $table->time('note_time')->nullable();
             $table->boolean('is_completed')->default(false);
+            $table->timestamp('completed_at')->nullable();
             $table->boolean('is_important')->default(false);
             $table->string('color_code')->nullable();
-            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->index(['user_id', 'note_date']);
+            $table->index('is_completed');
         });
 
         // Backup Storage Media
@@ -183,7 +188,7 @@ return new class extends Migration
         Schema::dropIfExists('roles');
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('backup_storage_media');
-        Schema::dropIfExists('pos_notes');
+        Schema::dropIfExists('todolist');
         Schema::dropIfExists('settings');
         Schema::dropIfExists('cache_locks');
         Schema::dropIfExists('cache');
